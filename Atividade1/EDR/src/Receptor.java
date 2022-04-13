@@ -45,8 +45,10 @@ class UDPConnectionClient implements Runnable {
       byte[] m = this.info.getBytes();
       InetAddress aHost = InetAddress.getByName(this.ip);
       int serverPort = 6789;
+      
       DatagramPacket request = new DatagramPacket(m, info.length(), aHost, serverPort);
       aSocket.send(request);
+
       byte[] buffer = new byte[1000];
       DatagramPacket reply = new DatagramPacket(buffer, buffer.length);
       aSocket.receive(reply);

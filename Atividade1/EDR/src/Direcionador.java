@@ -3,20 +3,18 @@ import java.io.*;
 
 // TCP Server
 public class Direcionador {
+  public static final int serverPort = 7896; // the server port
   public static void main(String args[]) {
+    //int index = 0;
     try {
-      int serverPort = 7896; // the server port
-      ServerSocket listenSocket1 = new ServerSocket(serverPort);
-      ServerSocket listenSocket2 = new ServerSocket(serverPort);
-      ServerSocket listenSocket3 = new ServerSocket(serverPort);
+      ServerSocket listenSocket = new ServerSocket(serverPort);
       while (true) {
-        Socket clientSocket1 = listenSocket1.accept();
-        Socket clientSocket2 = listenSocket2.accept();
-        Socket clientSocket3 = listenSocket3.accept();
+        Socket clientSocket = listenSocket.accept();
 
-        Connections c1 = new Connections(clientSocket1);
-        Connections c2 = new Connections(clientSocket2);
-        Connections c3 = new Connections(clientSocket3);
+        // Criando e executando as Threads.
+        Connections  connection = new Connections(clientSocket); 
+        System.out.println("Thread Criada!!");
+        //index++;
       }
     } catch (IOException e) {
       System.out.println("Listen socket:" + e.getMessage());
@@ -25,15 +23,20 @@ public class Direcionador {
 }
 
 class Connections extends Thread {
+  // Parte de TCP.
   DataInputStream in;
   DataOutputStream out;
   Socket clientSocket;
+
+  // Parte de UDP.
+  private DatagramSocket aSocket;
 
   public Connections(Socket aClientSocket) {
     try {
       clientSocket = aClientSocket;
       in = new DataInputStream(clientSocket.getInputStream());
       out = new DataOutputStream(clientSocket.getOutputStream());
+      this.aSocket = null;
       this.start();
     } catch (IOException e) {
       System.out.println("Connection:" + e.getMessage());
@@ -42,68 +45,32 @@ class Connections extends Thread {
 
   @Override
   public void run() {
-    try { // an echo server
-
-      String data = in.readUTF(); // read a line of data from the stream
-      out.writeUTF("Dadaos enviados!");
-      DatagramSocket aSocket = null;
-      try {
-        aSocket = new DatagramSocket(6789);
-        // create socket at agreed port
-        byte[] buffer = new byte[1000];
-        buffer = data.getBytes();
-        while (true) {
-          DatagramPacket request = new DatagramPacket(buffer, buffer.length);
-          aSocket.receive(request);
-          DatagramPacket reply = new DatagramPacket(request.getData(), request.getLength(),
-              request.getAddress(), request.getPort());
-          aSocket.send(reply);
-        }
-      } catch (SocketException e) {
-        System.out.println("Socket: " + e.getMessage());
-      } catch (IOException e) {
-        System.out.println("IO: " + e.getMessage());
-      } finally {
-        if (aSocket != null)
-          aSocket.close();
+    try {
+      String data = in.readUTF(); // recebe o input do Stream do TCPClient.
+      out.writeUTF("Dados enviados com sucesso! " + data); // envia a resposta para o TCPClient.
+      int serverPort = 6789;
+      this.aSocket = new DatagramSocket(serverPort); // Cria o socket UDP.
+      byte[] m = data.getBytes(); // Pega a mensagem em bytes.
+      InetAddress aHost = InetAddress.getByName("localhost"); // Cria o host para o UDP.
+      byte[] buffer = new byte[1000];
+      while(true) {
+        // Aceita o request do UDPClient.
+        DatagramPacket request = new DatagramPacket(buffer, buffer.length);
+        aSocket.receive(request);
+        System.out.println("Pacote recebido do UDP!");
+        // Distribuindo o reply
+        DatagramPacket reply = new DatagramPacket(m, data.length(), request.getAddress(), request.getPort());
+        aSocket.send(reply);
+        System.out.println("Reply enviada!");
       }
-    } catch (EOFException e) {
-      System.out.println("EOF:" + e.getMessage());
+    } catch (SocketException e) {
+      System.out.println("Socket: " + e.getMessage());
     } catch (IOException e) {
-      System.out.println("readline:" + e.getMessage());
+      System.out.println("IO: " + e.getMessage());
     } finally {
-      try {
-        clientSocket.close();
-      } catch (IOException e) {
-        /* close failed */}
+      if (this.aSocket != null)
+        this.aSocket.close();
+        System.out.println("Socket fechado. . .");
     }
   }
 }
-
-/*
- * class UDPConnection extends Thread{
- * public static void main(String args[]) {
- * DatagramSocket aSocket = null;
- * try {
- * aSocket = new DatagramSocket(6789);
- * // create socket at agreed port
- * byte[] buffer = new byte[1000];
- * while (true) {
- * DatagramPacket request = new DatagramPacket(buffer, buffer.length);
- * aSocket.receive(request);
- * DatagramPacket reply = new DatagramPacket(request.getData(),
- * request.getLength(),
- * request.getAddress(), request.getPort());
- * aSocket.send(reply);
- * }
- * } catch (SocketException e) {
- * System.out.println("Socket: " + e.getMessage());
- * } catch (IOException e) {
- * System.out.println("IO: " + e.getMessage());
- * } finally {
- * if (aSocket != null)
- * aSocket.close();
- * }
- * }
- * }
- */
