@@ -1,0 +1,158 @@
+1) C
+Task
+
+2) 
+public <T> T executeTask(Task<T> t) {
+  return t.execute();
+}
+
+
+3) E
+ComputeEngine
+
+4)
+package engine;
+
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+import java.rmi.server.UnicastRemoteObject;
+import compute.Compute;
+import compute.Task;
+
+public class ComputeEngine implements Compute {
+
+    public ComputeEngine() {
+        super();
+    }
+
+    public <T> T executeTask(Task<T> t) {
+        return t.execute();
+    }
+
+    public static void main(String[] args) {
+        //if (System.getSecurityManager() == null) {
+        //    System.setSecurityManager(new SecurityManager());
+        //}
+        try {
+            String name = "Compute";
+            Compute engine = new ComputeEngine();
+            Compute stub = (Compute) UnicastRemoteObject.exportObject(engine, 0);
+            Registry registry = LocateRegistry.getRegistry(args[0], Integer.parseInt(args[1]));
+            registry.rebind(name, stub);
+            System.out.println("ComputeEngine bound");
+        } catch (Exception e) {
+            System.err.println("ComputeEngine exception:");
+            e.printStackTrace();
+        }
+    }
+}
+
+5) C
+Pi.java
+
+6)
+ public static BigDecimal arctan(int inverseX,
+      int scale) {
+    BigDecimal result, numer, term;
+    BigDecimal invX = BigDecimal.valueOf(inverseX);
+    BigDecimal invX2 = BigDecimal.valueOf(inverseX * inverseX);
+
+    numer = BigDecimal.ONE.divide(invX,
+        scale, roundingMode);
+
+    result = numer;
+    int i = 1;
+    do {
+      numer = numer.divide(invX2, scale, roundingMode);
+      int denom = 2 * i + 1;
+      term = numer.divide(BigDecimal.valueOf(denom),
+          scale, roundingMode);
+      if ((i % 2) != 0) {
+        result = result.subtract(term);
+      } else {
+        result = result.add(term);
+      }
+      i++;
+    } while (term.compareTo(BigDecimal.ZERO) != 0);
+    return result;
+  }
+ 
+7) C
+ComputePi é classe e computePi é método.
+
+8) E
+ComputeEngine
+
+9)
+public ComputeEngine() {
+  super();
+}
+
+10)
+Implementa as interface remota Compute, como também pega o registro e realiza o seu bind.
+
+11) C
+ComputePi
+
+12)
+package client;
+
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+import java.math.BigDecimal;
+import compute.Compute;
+
+public class ComputePi {
+  public static void main(String args[]) {
+    if (System.getSecurityManager() == null) {
+      System.setSecurityManager(new SecurityManager());
+    }
+    try {
+      String name = "Compute";
+      Registry registry = LocateRegistry.getRegistry(args[0], Integer.parseInt(args[1]));
+      Compute comp = (Compute) registry.lookup(name);
+      Pi task = new Pi(Integer.parseInt(args[2]));
+      BigDecimal pi = comp.executeTask(task);
+      System.out.println(pi);
+    } catch (Exception e) {
+      System.err.println("ComputePi exception:");
+      e.printStackTrace();
+    }
+  }
+}
+
+13) 
+Compute
+
+14) C
+ComputeEngine
+
+
+15) C
+rebind
+
+17)
+Registry registry = LocateRegistry.getRegistry(args[0], Integer.parseInt(args[1]));
+registry.rebind(name, stub);
+System.out.println("ComputeEngine bound");
+
+18) E
+Compute
+
+19) C
+lookup
+
+20)
+Compute comp = (Compute) registry.lookup(name);
+
+21) C
+Pi
+
+alternativa:
+7/11 = 6,3
+
+dissertativa:
+
+?/9
+

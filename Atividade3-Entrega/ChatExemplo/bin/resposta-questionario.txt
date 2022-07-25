@@ -1,0 +1,12 @@
+1)
+Realiza o descarte de mensagens do usuário atual pelo mesmo, ou seja, se estiver ativo, todas mensagens de A serão descartadas por A.
+
+2)
+> setName define o nome do usuário no chat.
+> getName retorna o nome do usuário.
+> getClusterName pega o nome do grupo aonde os usuários estão localizados, utilizado para agrupar as mensagens para usuários no mesmo cluster.
+> getViewId retorna o identificador único do usuário na sala do chat.
+> getMembers retorna todos membros presentes, o membro 0 é o coordenador.
+> size pega o tamanho do estado que é um final List<String>.
+> getSrc retorna quem enviou a mensagem.
+> getObject retorna a mensagem.

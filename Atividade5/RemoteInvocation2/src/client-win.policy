@@ -1,0 +1,4 @@
+grant codeBase "file:D:/dev/projects/Computacao-Distribuida/Atividade5/RemoteInvocation2/src" {
+    permission java.net.SocketPermission "localhost:*", "connect,resolve";
+    permission java.security.AllPermission;
+};
