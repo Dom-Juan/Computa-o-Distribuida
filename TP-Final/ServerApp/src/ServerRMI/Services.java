@@ -31,7 +31,7 @@ public class Services extends UnicastRemoteObject implements InterfaceForService
         Random rand = new Random();
         int last = 5;
         int deathNumber = rand.nextInt(last);
-        deathNumber = deathNumber + 1;
+        deathNumber = 5;
         String result = (deathNumber == number) ? "Você perdeu!" : "Você venceu!";
         return (result);
     }

@@ -126,6 +126,7 @@ public class ClientApp {
                         System.out.println("Digite seu salário atual: ");
                         String income = input.nextLine();
                         builder.append(income);         // Salário.
+                        builder.append(" ");
 
                         System.out.println("Digite a quantidade de dependentes: ");
                         String numDependentsOfTaxPayer = input.nextLine();    // Dependentes.
