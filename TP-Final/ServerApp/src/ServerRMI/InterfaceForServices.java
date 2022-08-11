@@ -13,8 +13,9 @@ import java.rmi.RemoteException;
  */
 // Interface de serviços
 public interface InterfaceForServices extends Remote {
-    public String verifyPalindrome(String p) throws RemoteException;
+    // Listagem dos serviços.
     public String game(int number) throws RemoteException;
-    public String calcTriangleArea(double B, double H) throws RemoteException;
-    public String calcTrapezeArea(double B, double b, double H) throws RemoteException;
+    public String calcTempConversion(double temp, String type, String conversion) throws RemoteException;
+    public String conversionMoneyValue(double real, String type, String conversion) throws RemoteException;
+    public String calcIncomeTax(float base,int numDp) throws RemoteException;
 }

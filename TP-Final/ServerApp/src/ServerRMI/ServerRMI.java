@@ -13,10 +13,11 @@ import java.rmi.registry.Registry;
  */
 public class ServerRMI {
     public ServerRMI() throws RemoteException{
-        int port = 9090;
-        InterfaceForServices i = new Services();
-        Registry r = LocateRegistry.createRegistry(port);
-        r.rebind("server-rmi", i);
+        String serverRMIName = "serverRMI";                 // Local do RMI.
+        int port = 7070;                                    // porta do RMI.
+        InterfaceForServices i = new Services();            // Instanciando e criando interfaces.
+        Registry r = LocateRegistry.createRegistry(port);   // Criando o registro no RMI.
+        r.rebind(serverRMIName, i);                         // Realizando o bind do RMI.
         System.out.println("port: " + port);
         System.out.println("Address:" + "localhost:"+ port + "/" + (r.list()[0]));
     }

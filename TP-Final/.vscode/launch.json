@@ -1,0 +1,49 @@
+{
+  // Use o IntelliSense para saber mais sobre os atributos possíveis.
+  // Focalizar para exibir as descrições dos atributos existentes.
+  // Para obter mais informações, acesse: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Launch ClientApp",
+      "request": "launch",
+      "mainClass": "clientapp.ClientApp",
+      "projectName": "TP-Final_bec19f4b"
+    },
+    {
+      "type": "java",
+      "name": "Launch ServerApp",
+      "request": "launch",
+      "mainClass": "org.server.app.ServerApp",
+      "projectName": "TP-Final_bec19f4b"
+    },
+    {
+      "type": "java",
+      "name": "Launch ServerRMI",
+      "request": "launch",
+      "mainClass": "ServerRMI.ServerRMI",
+      "projectName": "TP-Final_bec19f4b"
+    },
+    {
+      "type": "java",
+      "name": "Launch ServerApp",
+      "request": "launch",
+      "mainClass": "org.server.app.ServerApp",
+      "projectName": "TP-Final_a9b5ebcd"
+    },
+    {
+      "type": "java",
+      "name": "Launch Current File",
+      "request": "launch",
+      "mainClass": "${file}"
+    },
+    {
+      "type": "java",
+      "name": "Launch ClientApp",
+      "request": "launch",
+      "mainClass": "clientapp.ClientApp",
+      "projectName": "TP-Final_a9b5ebcd"
+    }
+  ]
+}
