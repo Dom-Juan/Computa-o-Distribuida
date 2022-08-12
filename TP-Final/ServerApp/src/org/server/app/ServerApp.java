@@ -20,6 +20,7 @@ public class ServerApp {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws NotBoundException {
+        System.out.println("ServerApp.java\nExecução: main();");
         ServerSocket s = null;
         int serverPort = 9090;
         if(args.length > 1) serverPort = Integer.parseInt(args[0]);
@@ -46,6 +47,7 @@ class MakeConnection extends Thread {
     InterfaceForServices services;  // Criando a interface de serviços.
     // Função que realiza a conexão com o RMI server.
     public MakeConnection(Socket s) throws NotBoundException, IOException {
+        System.out.println("ServerApp.java\nExecução: MakeConnection()");
         try {
             client = s; // adiciona o cliente a esse conexão do server, para depois se comunicar com o RMI.
             System.out.println("Conexão em: " + client);
@@ -65,6 +67,7 @@ class MakeConnection extends Thread {
     @Override
     public void run() {
         try {
+            System.out.println("ServerApp.java\nExecução: \n@Override\nrun();");
             while(true) {
                 String data = in.readUTF();                 // recebendo as entradas do Cliente.
                 String [] requestData = data.split(" ");    // Fazendo o split de string de dados para vetor de strings com string.
@@ -84,6 +87,7 @@ class MakeConnection extends Thread {
                     System.out.println("Valor em Real do salário base: " + requestData[1]);
                     response = services.calcIncomeTax(Float.valueOf(requestData[1]), Integer.valueOf(requestData[2]));
                 } else if(String.valueOf(requestData[0]).equals("5")) {     // Enviar o dado para desconexão do cliente e desconecta-lo do server.
+                    System.out.println("ServerApp.java\ncommando: cliente desconectando...");
                     out.writeUTF("[quit]");
                     client.close();
                 } else {

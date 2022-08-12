@@ -13,6 +13,7 @@ import java.rmi.registry.Registry;
  */
 public class ServerRMI {
     public ServerRMI() throws RemoteException{
+        System.out.println("ServerRMI.java\nExecução: ServerRMI();");
         String serverRMIName = "serverRMI";                 // Local do RMI.
         int port = 7070;                                    // porta do RMI.
         InterfaceForServices i = new Services();            // Instanciando e criando interfaces.
@@ -23,6 +24,7 @@ public class ServerRMI {
     }
     
     public static void main(String [] args) throws RemoteException {
+        System.out.println("ServerRMI.java\nExecução: main();");
         new ServerRMI();
     }
 }

@@ -17,6 +17,7 @@ public class ClientApp {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        System.out.println("ClientApp.java\nExecução: main();");
         Socket s = null; // Criando o socket com null.
         int serverPort = 9090;
         try {

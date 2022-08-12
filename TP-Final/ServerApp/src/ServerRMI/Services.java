@@ -28,6 +28,7 @@ public class Services extends UnicastRemoteObject implements InterfaceForService
     // Joga jogo da roleta russa.
     @Override
     public String game(int number) throws RemoteException {
+        System.out.println("Services.java\nExecução: game();");
         Random rand = new Random();
         int last = 5;
         int deathNumber = rand.nextInt(last);
@@ -38,6 +39,8 @@ public class Services extends UnicastRemoteObject implements InterfaceForService
 
     @Override
     public String calcTempConversion(double temp, String type, String conversion) throws RemoteException {
+        System.out.println("Services.java\nExecução: calcTempConversion();");
+        System.out.println(temp +" "+type+" "+conversion);
         if (type.equals("C")) { // Contas com Celsius.
             double C = temp, F = 0.0;
             if (conversion.equals("F")) {
@@ -100,6 +103,7 @@ public class Services extends UnicastRemoteObject implements InterfaceForService
 
     @Override
     public String conversionMoneyValue(double real, String type, String conversion) throws RemoteException {   // Conversão de valores de moedas.
+        System.out.println("Services.java\nExecução: conversionMoneyValue();");
         if(conversion.equals("real")) {
             if(type.equals("dollar")) {
                 return String.valueOf("O valor em real de " + real + " dollar(es) " + " é: " + (real*5.16));
@@ -127,6 +131,7 @@ public class Services extends UnicastRemoteObject implements InterfaceForService
 
     @Override
     public String calcIncomeTax(float income, int numDependentsOfTaxPayer) throws RemoteException {     // salario base | numero de dependentes.
+        System.out.println("Services.java\nExecução: calcIncomeTax();");
         float incomeTax;
         if (income < 1903.98f) { // Caso o salário seja menor q o esperado para calculo do imposto.
             return "Isento de imposto";
